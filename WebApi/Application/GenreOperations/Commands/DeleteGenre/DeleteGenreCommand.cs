@@ -7,21 +7,21 @@ namespace WebApi.Application.GenreOperations.Commands.DeleteGenre
     public class DeleteGenreCommand
     {
         public int GenreId { get; set; }
-        private readonly BookStoreDbContext _dbContext;
+        private readonly IBookStoreDbContext _context;
 
-        public DeleteGenreCommand(BookStoreDbContext dbContext)
+        public DeleteGenreCommand(IBookStoreDbContext context)
         {
-            _dbContext = dbContext;
+            _context = context;
         }
 
         public void Handle()
         {
-            var genre = _dbContext.Genres.FirstOrDefault(b => b.Id == GenreId);
+            var genre = _context.Genres.FirstOrDefault(b => b.Id == GenreId);
             if (genre is null)
                 throw new InvalidOperationException("Kitap türü mevcut değil");
 
-            _dbContext.Genres.Remove(genre);
-            _dbContext.SaveChanges();
+            _context.Genres.Remove(genre);
+            _context.SaveChanges();
         }
     }
 

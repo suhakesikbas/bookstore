@@ -8,16 +8,16 @@ namespace WebApi.Application.BookOperations.Commands.UpdateBook
     {
         public int BookId { get; set; }
         public UpdateBookModel Model { get; set; }
-        private readonly BookStoreDbContext _dbContext;
+        private readonly IBookStoreDbContext _context;
 
-        public UpdateBookCommand(BookStoreDbContext dbContext)
+        public UpdateBookCommand(IBookStoreDbContext context)
         {
-            _dbContext = dbContext;
+            _context = context;
         }
 
         public void Handle()
         {
-            var book = _dbContext.Books.FirstOrDefault(b => b.Id == BookId);
+            var book = _context.Books.FirstOrDefault(b => b.Id == BookId);
             if (book is null)
                 throw new InvalidOperationException("Kitap bulunamadı.");
 
@@ -26,7 +26,7 @@ namespace WebApi.Application.BookOperations.Commands.UpdateBook
             book.AuthorId = Model.AuthorId != default ? Model.AuthorId : book.AuthorId;
             book.PageCount = Model.PageCount != default ? Model.PageCount : book.PageCount;
             book.PublishDate = Model.PublishDate != default ? Model.PublishDate : book.PublishDate;
-            _dbContext.SaveChanges();
+            _context.SaveChanges();
         }
     }
     public class UpdateBookModel

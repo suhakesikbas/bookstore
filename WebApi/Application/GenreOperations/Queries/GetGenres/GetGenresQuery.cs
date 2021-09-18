@@ -7,18 +7,18 @@ namespace WebApi.Application.GenreOperations.Queries.GetGenres
 {
     public class GetGenresQuery
     {
-        private readonly BookStoreDbContext _dbContext;
+        private readonly IBookStoreDbContext _context;
         private readonly IMapper _mapper;
 
-        public GetGenresQuery(BookStoreDbContext dbContext, IMapper mapper)
+        public GetGenresQuery(IBookStoreDbContext context, IMapper mapper)
         {
-            _dbContext = dbContext;
+            _context = context;
             _mapper = mapper;
         }
 
         public List<GenreViewModel> Handle()
         {
-            var genres = _dbContext.Genres.Where(g => g.IsActive).ToList();
+            var genres = _context.Genres.Where(g => g.IsActive).ToList();
             List<GenreViewModel> vm = _mapper.Map<List<GenreViewModel>>(genres);
 
             return vm;

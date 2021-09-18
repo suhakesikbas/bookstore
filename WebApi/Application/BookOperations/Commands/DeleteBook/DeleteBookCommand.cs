@@ -7,21 +7,21 @@ namespace WebApi.Application.BookOperations.Commands.DeleteBook
     public class DeleteBookCommand
     {
         public int BookId { get; set; }
-        private readonly BookStoreDbContext _dbContext;
+        private readonly IBookStoreDbContext _context;
 
-        public DeleteBookCommand(BookStoreDbContext dbContext)
+        public DeleteBookCommand(IBookStoreDbContext context)
         {
-            _dbContext = dbContext;
+            _context = context;
         }
 
         public void Handle()
         {
-            var book = _dbContext.Books.FirstOrDefault(b => b.Id == BookId);
+            var book = _context.Books.FirstOrDefault(b => b.Id == BookId);
             if (book is null)
                  throw new InvalidOperationException("Kitap bulunamadı.");
 
-            _dbContext.Books.Remove(book);
-            _dbContext.SaveChanges();
+            _context.Books.Remove(book);
+            _context.SaveChanges();
         }
     }
 

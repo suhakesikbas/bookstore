@@ -9,18 +9,18 @@ namespace WebApi.Application.BookOperations.Commands.CreateBook
     public class CreateBookCommand
     {
         public CreateBookModel Model { get; set; }
-        private readonly BookStoreDbContext _dbContext;
+        private readonly IBookStoreDbContext _context;
         private readonly IMapper _mapper;
 
-        public CreateBookCommand(BookStoreDbContext dbContext, IMapper mapper)
+        public CreateBookCommand(IBookStoreDbContext context, IMapper mapper)
         {
-            _dbContext = dbContext;
+            _context = context;
             _mapper = mapper;
         }
 
         public void Handle()
         {
-            var book = _dbContext.Books.FirstOrDefault(b => b.Title == Model.Title);
+            var book = _context.Books.FirstOrDefault(b => b.Title == Model.Title);
             if (book is not null)
                 throw new InvalidOperationException("Kitap zaten mevcut");
 
@@ -30,8 +30,8 @@ namespace WebApi.Application.BookOperations.Commands.CreateBook
             // book.PageCount = Model.PageCount;
             // book.PublishDate = Model.PublishDate;
 
-            _dbContext.Books.Add(book);
-            _dbContext.SaveChanges();
+            _context.Books.Add(book);
+            _context.SaveChanges();
         }
     }
 
