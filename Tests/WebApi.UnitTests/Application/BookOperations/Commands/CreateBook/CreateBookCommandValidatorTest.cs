@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Application.BookOperations.Commands.CreateBook
 {
-    public class CreateBookCommandValidatorTest : IClassFixture<CommonTestFixture>
+    public class CreateBookCommandValidatorTest
     {
 
 

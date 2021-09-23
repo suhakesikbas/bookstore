@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using AutoMapper;
 using FluentAssertions;
 using TestSetup;
@@ -18,7 +19,7 @@ namespace Application.AuthorOperations.Commands.DeleteAuthor
         }
 
         [Fact]
-        public void WhenNotExistingAuthorIdIsGiven_InvalidOperationException_ShouldBeReturnError()
+        public void WhenNonExistAuthorIdIsGiven_InvalidOperationException_ShouldBeReturnError()
         {
             DeleteAuthorCommand command = new DeleteAuthorCommand(_context);
             command.AuthorId = 99;
@@ -47,6 +48,9 @@ namespace Application.AuthorOperations.Commands.DeleteAuthor
             command.AuthorId = author.Id;
 
             FluentActions.Invoking(() => command.Handle()).Invoke();
+
+            var deletedAuthor = _context.Authors.SingleOrDefault(a=>a.Id == author.Id);
+            deletedAuthor.Should().BeNull();
         }
     }
 }

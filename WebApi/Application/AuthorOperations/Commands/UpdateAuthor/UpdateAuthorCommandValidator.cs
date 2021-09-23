@@ -7,8 +7,8 @@ namespace WebApi.Application.AuthorOperations.Commands.UpdateAuthor
         public UpdateAuthorCommandValidator()
         {
             RuleFor(command=>command.AuthorId).GreaterThan(0);
-            RuleFor(command => command.Model.Name).MinimumLength(4)
-            .When(x => x.Model.Name != string.Empty);
+            RuleFor(command => command.Model.Name).MinimumLength(4).When(x => x.Model.Name != string.Empty);
+            RuleFor(command=>command.Model.Birthday).NotEmpty().LessThan(System.DateTime.Now.Date.AddYears(-8));
         }
     }
 }

@@ -1,10 +1,10 @@
 using FluentAssertions;
-using WebApi.Application.AuthorOperations.Commands.DeleteAuthor;
+using WebApi.Application.AuthorOperations.Queries.GetAuthorDetail;
 using Xunit;
 
-namespace Application.AuthorOperations.Commands.DeleteAuthor
+namespace Application.AuthorOperations.Queries.GetAuthorDetail
 {
-    public class DeleteAuthorCommandValidatorTest
+    public class GetAuthorDetailQueryValidatorTest
     {
         [Theory]
         [InlineData(-1)]
@@ -12,11 +12,11 @@ namespace Application.AuthorOperations.Commands.DeleteAuthor
         public void WhenInvalidInputsAreGiven_Validator_ShouldBeReturnErrors(int authorId)
         {
             //arrange
-            DeleteAuthorCommand command = new DeleteAuthorCommand(null);
+            GetAuthorDetailQuery command = new GetAuthorDetailQuery(null,null);
             command.AuthorId = authorId;
 
             //act
-            DeleteAuthorCommandValidator validator = new DeleteAuthorCommandValidator();
+            GetAuthorDetailQueryValidator validator = new GetAuthorDetailQueryValidator();
             var result = validator.Validate(command);
 
             //assert
@@ -27,10 +27,10 @@ namespace Application.AuthorOperations.Commands.DeleteAuthor
         public void WhenValidInputsAreGiven_Validator_ShouldNotBeReturnError()
         {
             //arrange
-            DeleteAuthorCommand command = new DeleteAuthorCommand(null);
+            GetAuthorDetailQuery command = new GetAuthorDetailQuery(null,null);
             command.AuthorId = 1;
             //act
-            DeleteAuthorCommandValidator validator = new DeleteAuthorCommandValidator();
+            GetAuthorDetailQueryValidator validator = new GetAuthorDetailQueryValidator();
             var result = validator.Validate(command);
 
             //assert
@@ -38,4 +38,5 @@ namespace Application.AuthorOperations.Commands.DeleteAuthor
         }
     
     }
+
 }

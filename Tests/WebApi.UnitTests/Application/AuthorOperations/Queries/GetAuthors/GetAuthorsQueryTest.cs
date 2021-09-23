@@ -1,28 +1,29 @@
 using AutoMapper;
 using FluentAssertions;
 using TestSetup;
-using WebApi.Application.GenreOperations.Queries.GetGenres;
+using WebApi.Application.AuthorOperations.Queries.GetAuthors;
 using WebApi.DbOperations;
 using Xunit;
 
-namespace Application.GenreOperations.Queries.GetGenres
+namespace Application.AuthorOperations.Queries.GetAuthors
 {
-    public class GetGenresCommandTest : IClassFixture<CommonTestFixture>
+    public class GetAuthorsQueryTest : IClassFixture<CommonTestFixture>
     {
         private readonly IBookStoreDbContext _context;
         private readonly IMapper _mapper;
 
-        public GetGenresCommandTest(CommonTestFixture fixture)
+        public GetAuthorsQueryTest(CommonTestFixture fixture)
         {
             _context = fixture.Context;
             _mapper = fixture.Mapper;
         }
+
         [Fact]
-        public void WhenValidInputsAreGiven_Genres_ShouldBeReturn()
+        public void WhenValidInputsAreGiven_Authors_ShouldBeReturn()
         {
-            GetGenresQuery query = new GetGenresQuery(_context, _mapper);
+             GetAuthorsQuery query = new GetAuthorsQuery(_context, _mapper);
+
             FluentActions.Invoking(() => query.Handle()).Should().NotBeNull();
         }
     }
-
 }

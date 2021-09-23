@@ -1,40 +1,44 @@
 using System;
+using System.Linq;
 using AutoMapper;
 using FluentAssertions;
 using TestSetup;
-using WebApi.Application.GenreOperations.Queries.GetGenreDetail;
+using WebApi.Application.AuthorOperations.Queries.GetAuthorDetail;
 using WebApi.DbOperations;
 using Xunit;
 
-namespace Application.GenreOperations.Queries.GetGenreDetail
+namespace Application.AuthorOperations.Queries.GetAuthorDetail
 {
-    public class GetGenreDetailCommandTest : IClassFixture<CommonTestFixture>
+    public class GetAuthorDetailQueryTest : IClassFixture<CommonTestFixture>
     {
         private readonly IBookStoreDbContext _context;
         private readonly IMapper _mapper;
 
-        public GetGenreDetailCommandTest(CommonTestFixture fixture)
+        public GetAuthorDetailQueryTest(CommonTestFixture fixture)
         {
             _context = fixture.Context;
             _mapper = fixture.Mapper;
         }
+
         [Fact]
         public void WhenNonExistAuthorIdIsGiven_InvalidOperationException_ShouldBeReturn()
         {
-            GetGenreDetailQuery query = new GetGenreDetailQuery(_context, _mapper);
-            query.GenreId = 99;
-
+            GetAuthorDetailQuery query = new GetAuthorDetailQuery(_context,_mapper);
+            query.AuthorId = 99;
             FluentActions.Invoking(() => query.Handle())
-            .Should().Throw<InvalidOperationException>().And.Message.Should().Be("Kitap türü bulunamadı!");
+            .Should().Throw<InvalidOperationException>().And.Message.Should().Be("Yazar bulunamadı!");
         }
         [Fact]
         public void WhenValidInputsAreGiven_Author_ShouldBeReturn()
         {
-            GetGenreDetailQuery query = new GetGenreDetailQuery(_context, _mapper);
-            query.GenreId = 1;
+            GetAuthorDetailQuery query = new GetAuthorDetailQuery(_context,_mapper);
+            query.AuthorId = 1;
 
             FluentActions.Invoking(() => query.Handle())
             .Should().NotBeNull();
         }
+
+
     }
+
 }

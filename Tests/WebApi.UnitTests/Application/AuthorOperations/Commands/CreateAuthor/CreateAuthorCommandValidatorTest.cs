@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Application.AuthorOperations.Commands.CreateAuhtor
 {
-    public class CreateAuthorCommandValidatorTest : IClassFixture<CommonTestFixture>
+    public class CreateAuthorCommandValidatorTest
     {
         [Theory]
         [InlineData("      ")]
@@ -26,6 +26,7 @@ namespace Application.AuthorOperations.Commands.CreateAuhtor
 
             result.Errors.Count.Should().BeGreaterThan(0);
         }
+
         [Fact]
         public void WhenDateTimeEqualNowIsGiven_Validator_ShouldBeReturnError()
         {
@@ -42,6 +43,7 @@ namespace Application.AuthorOperations.Commands.CreateAuhtor
             result.Errors.Count.Should().BeGreaterThan(0);
         }
 
+        [Fact]
         public void WhenValidInputsAreGiven_Validator_SholdNotBeReturnError()
         {
             CreateAuthorCommand command = new CreateAuthorCommand(null, null);
